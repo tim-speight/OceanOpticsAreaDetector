@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+<Attributes>
+  <Attribute  name="WavelengthCoeff_A0"   source="$(P)$(R)WavelengthCoeff_A0"   type="EPICS_PV" datatype="DOUBLE" when="OnFileClose"/>
+  <Attribute  name="WavelengthCoeff_A1"   source="$(P)$(R)WavelengthCoeff_A1"   type="EPICS_PV" datatype="DOUBLE" when="OnFileClose"/>
+  <Attribute  name="WavelengthCoeff_A2"   source="$(P)$(R)WavelengthCoeff_A2"   type="EPICS_PV" datatype="DOUBLE" when="OnFileClose"/>
+  <Attribute  name="WavelengthCoeff_A3"   source="$(P)$(R)WavelengthCoeff_A3"   type="EPICS_PV" datatype="DOUBLE" when="OnFileClose"/>
+</Attributes>

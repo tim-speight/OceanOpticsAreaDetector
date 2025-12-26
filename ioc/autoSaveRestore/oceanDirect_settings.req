@@ -1,0 +1,4 @@
+file "ADBase_settings.req", P=$(P), R=$(R)
+file "NDArrayBase_settings.req", P=$(P), R=image1:
+file "NDPluginBase_settings.req", P=$(P), R=image1:
+

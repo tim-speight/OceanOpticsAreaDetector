@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Saved on 2024-11-28 15:55:47 by epacdiag1-->
+<display version="2.0.0">
+  <width>450</width>
+  <height>500</height>
+  <background_color>
+    <color red="240" green="240" blue="240">
+    </color>
+  </background_color>
+  <actions>
+  </actions>
+  <grid_step_x>6</grid_step_x>
+  <grid_step_y>6</grid_step_y>
+  <widget type="label" version="2.0.0">
+    <name>Label</name>
+    <text>Spectrometers</text>
+    <x>6</x>
+    <y>6</y>
+    <width>181</width>
+    <height>31</height>
+    <font>
+      <font family="Ubuntu" style="BOLD" size="15.841584158415841">
+      </font>
+    </font>
+    <vertical_alignment>1</vertical_alignment>
+    <actions>
+    </actions>
+    <border_color>
+      <color red="0" green="128" blue="255">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="embedded" version="2.0.0">
+    <name>container-1</name>
+    <macros>
+      <NAME>FE-204-PSO-2-D-SP-1</NAME>
+    </macros>
+    <file>spectrometer_select_single.bob</file>
+    <x>6</x>
+    <y>48</y>
+    <width>440</width>
+    <height>55</height>
+    <resize>2</resize>
+    <actions>
+    </actions>
+    <border_color>
+      <color red="0" green="128" blue="255">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="embedded" version="2.0.0">
+    <name>container-2</name>
+    <macros>
+      <NAME>FE-204-PSO-1-D-SP-1</NAME>
+    </macros>
+    <file>spectrometer_select_single.bob</file>
+    <x>6</x>
+    <y>93</y>
+    <width>440</width>
+    <height>55</height>
+    <resize>2</resize>
+    <actions>
+    </actions>
+    <border_color>
+      <color red="0" green="128" blue="255">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="embedded" version="2.0.0">
+    <name>container-3</name>
+    <macros>
+      <NAME>FE-204-PSO-3-D-SP-1</NAME>
+    </macros>
+    <file>spectrometer_select_single.opi</file>
+    <x>6</x>
+    <y>144</y>
+    <width>440</width>
+    <height>55</height>
+    <resize>2</resize>
+    <actions>
+    </actions>
+    <border_color>
+      <color red="0" green="128" blue="255">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="embedded" version="2.0.0">
+    <name>container_4</name>
+    <macros>
+      <NAME>FE-204-PSS-D-SP-1</NAME>
+    </macros>
+    <file>spectrometer_select_single.opi</file>
+    <x>6</x>
+    <y>199</y>
+    <width>440</width>
+    <height>55</height>
+    <resize>2</resize>
+    <actions>
+    </actions>
+    <border_color>
+      <color red="0" green="128" blue="255">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="embedded" version="2.0.0">
+    <name>container_5</name>
+    <macros>
+      <NAME>FE-204-NSS-2-D-SP-1</NAME>
+    </macros>
+    <file>spectrometer_select_single.opi</file>
+    <x>6</x>
+    <y>254</y>
+    <width>440</width>
+    <height>55</height>
+    <resize>2</resize>
+    <actions>
+    </actions>
+    <border_color>
+      <color red="0" green="128" blue="255">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="embedded" version="2.0.0">
+    <name>container_6</name>
+    <macros>
+      <NAME>FE-204-EC-2-SP-1</NAME>
+    </macros>
+    <file>spectrometer_select_single.opi</file>
+    <x>6</x>
+    <y>309</y>
+    <width>440</width>
+    <height>55</height>
+    <resize>2</resize>
+    <actions>
+    </actions>
+    <border_color>
+      <color red="0" green="128" blue="255">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="embedded" version="2.0.0">
+    <name>container_7</name>
+    <macros>
+      <NAME>FE-204-NSO-D-P2-SP</NAME>
+    </macros>
+    <file>spectrometer_select_single.opi</file>
+    <x>6</x>
+    <y>364</y>
+    <width>440</width>
+    <height>55</height>
+    <resize>2</resize>
+    <actions>
+    </actions>
+    <border_color>
+      <color red="0" green="128" blue="255">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="embedded" version="2.0.0">
+    <name>container_8</name>
+    <macros>
+      <NAME>FE-204-NSO-D-P4-SP</NAME>
+    </macros>
+    <file>spectrometer_select_single.opi</file>
+    <x>6</x>
+    <y>419</y>
+    <width>440</width>
+    <height>55</height>
+    <resize>2</resize>
+    <actions>
+    </actions>
+    <border_color>
+      <color red="0" green="128" blue="255">
+      </color>
+    </border_color>
+  </widget>
+</display>

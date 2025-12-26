@@ -1,0 +1,50 @@
+record(mbbi, "$(TFL-PREFIX):OverallStatus") {
+    field(DESC, "Ocean Spectrometer TFLStatus")
+    field(ZRST, "Disconnected")
+    field(ZRVL, "0")
+    field(ONST, "OK")         
+    field(ONVL, "1")
+    field(TWST, "Warning")         
+    field(TWVL, "2")
+    field(THST, "Error")       
+    field(THVL, "3")
+}
+
+record(calcout, "$(TFL-PREFIX):StatusCalc"){
+    field(SCAN, "1 second")
+    field(CALC, "(A == 0) ? 0 : ((B == 3) ? 3 : ((C == 2) ? 2 : 1))")
+    field(INPA, "$(TFL-PREFIX):ConnectionState PP")
+    field(INPB, "$(TFL-PREFIX):AllErrors PP")
+    field(INPC, "$(TFL-PREFIX):AllWarnings PP")    
+    field(OUT, "$(TFL-PREFIX):OverallStatus PP")    
+}
+
+record(calc, "$(TFL-PREFIX):AllErrors"){   
+    field(SCAN, "1 second")
+    field(CALC, "(A > 0) ? 3 : 1") # 3 is error
+    field(INPA, "$(TFL-PREFIX):ErrorsCalc")
+}
+
+record(calc, "$(TFL-PREFIX):AllWarnings"){
+    field(SCAN, "1 second")
+    field(CALC, "(A > 0) ? 2 : 1") # 2 is warning
+    field(INPA, "$(TFL-PREFIX):WarningsCalc")
+}
+
+record(calc, "$(TFL-PREFIX):ErrorsCalc"){
+    field(SCAN, "1 second")
+    field(CALC, "0") 
+}
+
+record(calc, "$(TFL-PREFIX):WarningsCalc"){
+    field(SCAN, "1 second")
+    field(CALC, "0") 
+}
+
+
+record(bi, "$(TFL-PREFIX):ConnectionState") {
+  field(ZSV, "MAJOR")
+  field(ZNAM, "Disconnected")
+  field(ONAM, "Connected")
+  field(INP, "$(P)$(Q)ConnectionStatus CP")
+}

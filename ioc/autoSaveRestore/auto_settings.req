@@ -1,0 +1,8 @@
+file "oceanDirect_settings.req",        P=$(P), R=$(R)
+file "oceanDirect_commonPlugin_settings.req", P=$(P)
+$(P)$(R)WavelengthsMIN
+$(P)$(R)WavelengthsMAX
+$(P)$(R)WavelengthsAUTOSCALE
+$(P)$(Q)ArrayDataMIN
+$(P)$(Q)ArrayDataMAX
+$(P)$(Q)ArrayDataAUTOSCALE

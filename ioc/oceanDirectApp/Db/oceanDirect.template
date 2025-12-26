@@ -1,0 +1,268 @@
+include "ADBase.template"
+include "NDFile.template"
+
+###############################################################################
+# States for the TriggerMode records defined in ADBase.template
+###############################################################################
+record(mbbo,"$(P)$(R)TriggerMode") {
+    field(DESC,"Acquire mode")
+    field(ZRVL,"0")
+    field(ZRST,"Software")
+    field(ONVL,"1")
+    field(ONST,"External Edge")
+    field(TWVL,"2")
+    field(TWST,"External Level")
+}
+
+record(mbbi,"$(P)$(R)TriggerMode_RBV") {
+    field(DESC,"Acquire mode")
+    field(ZRVL,"0")
+    field(ZRST,"Software")
+    field(ONVL,"1")
+    field(ONST,"External Edge")
+    field(TWVL,"2")
+    field(TWST,"External Level")
+}
+
+###############################################################################
+# Delay time in External Trigger mode.
+###############################################################################
+record(ao, "$(P)$(R)DelayTime")
+{
+    field(PINI, "YES")
+    field(DTYP, "asynFloat64")
+    field(OUT,  "@asyn($(PORT), 0, 1)OceanDirectDelayTime")
+    field(EGU,  "s")
+    field(VAL,  "0")
+    field(PREC, "6")
+}
+
+record(ai, "$(P)$(R)DelayTime_RBV")
+{
+    field(DTYP, "asynFloat64")
+    field(INP,  "@asyn($(PORT), 0, 1)OceanDirectDelayTime")
+    field(EGU,  "s")
+    field(PREC, "6")
+    field(SCAN, "I/O Intr")
+}
+
+record(waveform, "$(P)$(R)WavelengthStub")
+{
+    #Bug in asyn need to compile this function twice
+    field(DESC, "Stub fn to countenance EPICS bug")
+    field(DTYP, "asynFloat64ArrayIn")
+    field(INP,  "@asyn($(PORT), 0, 1)OceanDirectSpectrumXAxis")
+    field(NELM, "2")
+    field(FTVL, "DOUBLE")
+}
+
+###############################################################################
+# Wavelengths as defined on OceanOptics spectrometer
+###############################################################################
+record(waveform, "$(P)$(R)Wavelengths")
+{
+    field(PINI, "NO")
+    field(DTYP, "asynFloat64ArrayIn")
+    field(INP,  "@asyn($(PORT), 0, 1)OceanDirectSpectrumXAxis")
+    field(NELM, "$(NELEMENTS)")
+    field(FTVL, "DOUBLE")
+    field(EGU,  "nm")
+}
+
+record(waveform, "$(P)$(R)WavelengthCoeffs")
+{
+    field(PINI, "YES")
+    field(DTYP, "asynFloat64ArrayIn")
+    field(INP,  "@asyn($(PORT), 0, 1)OceanDirectWaveCoeffs")
+    field(NELM, "5")
+    field(FTVL, "DOUBLE")
+    field(EGU,  "nm")
+    field(FLNK, "$(P)$(R)WavelengthCoeff_A0_subA")
+}
+
+record(subArray, "$(P)$(R)WavelengthCoeff_A0_subA")
+{
+    field(INP, "$(P)$(R)WavelengthCoeffs")
+    field(FTVL, "DOUBLE")
+    field(MALM, "5")
+    field(NELM, "1")
+    field(INDX, "0")
+    field(FLNK, "$(P)$(R)WavelengthCoeff_A0")
+}
+
+record(ai, "$(P)$(R)WavelengthCoeff_A0") {
+    field(INP,  "$(P)$(R)WavelengthCoeff_A0_subA")
+    field(FLNK, "$(P)$(R)WavelengthCoeff_A1_subA")
+}
+
+record(subArray, "$(P)$(R)WavelengthCoeff_A1_subA")
+{
+    field(INP, "$(P)$(R)WavelengthCoeffs")
+    field(FTVL, "DOUBLE")
+    field(MALM, "5")
+    field(NELM, "1")
+    field(INDX, "1")
+    field(FLNK, "$(P)$(R)WavelengthCoeff_A1")
+}
+
+record(ai, "$(P)$(R)WavelengthCoeff_A1") {
+    field(INP,  "$(P)$(R)WavelengthCoeff_A1_subA")
+    field(FLNK, "$(P)$(R)WavelengthCoeff_A2_subA")
+}
+
+record(subArray, "$(P)$(R)WavelengthCoeff_A2_subA")
+{
+    field(INP, "$(P)$(R)WavelengthCoeffs")
+    field(FTVL, "DOUBLE")
+    field(MALM, "5")
+    field(NELM, "1")
+    field(INDX, "2")
+    field(FLNK, "$(P)$(R)WavelengthCoeff_A2")
+}
+
+record(ai, "$(P)$(R)WavelengthCoeff_A2") {
+    field(INP,  "$(P)$(R)WavelengthCoeff_A2_subA")
+    field(FLNK, "$(P)$(R)WavelengthCoeff_A3_subA")
+}
+
+record(subArray, "$(P)$(R)WavelengthCoeff_A3_subA")
+{
+    field(INP, "$(P)$(R)WavelengthCoeffs")
+    field(FTVL, "DOUBLE")
+    field(MALM, "5")
+    field(NELM, "1")
+    field(INDX, "3")
+    field(FLNK, "$(P)$(R)WavelengthCoeff_A3")
+}
+
+record(ai, "$(P)$(R)WavelengthCoeff_A3") {
+    field(INP,  "$(P)$(R)WavelengthCoeff_A3_subA")
+}
+
+###############################################################################
+# Analysis - Only run maths for COM & FWHM if we are acquiring & stack enabled
+###############################################################################
+record(calc, "$(P)$(R)DoAnalysis") {
+    field(DESC, "PreConditional for running analysis")
+    field(INPA, "$(P)Proc1:EnableCallbacks_RBV.ORAW PP")
+    field(INPB, "$(P)Stats1:EnableCallbacks_RBV.ORAW PP")
+    field(INPC, "$(P)Stats1:ComputeCentroid_RBV.ORAW PP")
+    field(INPD, "$(P)$(R)Acquire_RBV CP")
+    field(CALC, "!(A&B&C&D)")
+}
+
+record(calcout, "$(P)$(R)ZeroAnalysis") {
+    field(SDIS, "$(P)$(R)DoAnalysis CP")
+    field(DESC, "Inverse zero analysis PVs")
+    field(DISV, "1")
+    field(DESC, "Reset COM/FWHM to zero")
+    field(INPA, "$(P)$(R)Acquire_RBV CP")
+    field(CALC, "!A")
+    field(OUT, "$(P)$(R)ZeroAnalysisVals.PROC")
+}
+
+record(dfanout, "$(P)$(R)ZeroAnalysisVals") {
+    field(SELM, "All")
+    field(DESC, "FanZero COM & FWHM")
+    field(VAL, "0")
+    field(OUTA, "$(P)$(R)CentreOfMass PP")
+    field(OUTB, "$(P)$(R)FwhmVal PP")
+}
+
+###############################################################################
+# COM - Spectral centre of Mass
+###############################################################################
+record(calc, "$(P)$(R)CentreOfMass") {
+    field(SDIS, "$(P)$(R)DoAnalysis CP")
+    field(DESC, "Calculate the COM")
+    field(INPA, "$(P)Stats1:CentroidX_RBV CP")
+    field(INPB, "$(P)$(R)WavelengthCoeff_A0 CP")
+    field(INPC, "$(P)$(R)WavelengthCoeff_A1 CP")
+    field(INPD, "$(P)$(R)WavelengthCoeff_A2 CP")
+    field(INPE, "$(P)$(R)WavelengthCoeff_A3 CP")
+    field(CALC, "B + (C*A) + (D*A^2) + (E*A^3)")
+}
+
+###############################################################################
+#  FWHM - Full width half max
+###############################################################################
+record(aSub, "$(P)$(R)CalcFwhm") {
+    field(SDIS,  "$(P)$(R)DoAnalysis CP")
+    field(DESC, "Calculate the FWHM")
+    field(SNAM, "calcFwhm")
+    field(INPA, "$(P)$(R)Wavelengths")
+    field(FTA, "DOUBLE")
+    field(NOA, "$(NELEMENTS)")
+    field(INPB, "$(P)image1:ArrayData CP")
+    field(FTB, "DOUBLE")
+    field(NOB, "$(NELEMENTS)")
+    field(OUTA, "$(P)$(R)FwhmVal PP")
+    field(FTVA, "DOUBLE")
+    field(NOVA, "$(NELEMENTS)")
+}
+
+record(ai, "$(P)$(R)FwhmVal"){
+    field(DESC, "Value of the FWHM") 
+    field(EGU, "nm")
+}
+
+##########################################################
+### Wavelength & Array Data Axis parameters
+##########################################################
+
+record(ai, "$(P)$(R)WavelengthsMIN"){
+    field(DESC, "Min Wavelength on X Axis")
+    field(VAL, "0")
+    field(LOPR, "0")
+    field(HOPR, "5000")
+    field(PINI, "YES")
+}
+
+record(ai, "$(P)$(R)WavelengthsMAX"){
+    field(DESC, "Max Wavelength on X Axis")
+    field(VAL, "5000")
+    field(LOPR, "0")
+    field(HOPR, "5000")
+    field(PINI, "YES")
+}
+
+record(bi, "$(P)$(R)WavelengthsAUTOSCALE"){
+    field(DESC, "Auto scale Wavelength on X Axis")
+    field(VAL, "1")
+    field(PINI, "YES")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(ai, "$(P)$(Q)ArrayDataMIN"){
+    field(DESC, "Min Array Data on Y Axis")
+    field(VAL, "-60000")
+    field(LOPR, "-60000")
+    field(HOPR, "60000")
+    field(PINI, "YES")
+}
+
+record(ai, "$(P)$(Q)ArrayDataMAX"){
+    field(DESC, "Max Array Data on Y Axis")
+    field(VAL, "60000")
+    field(LOPR, "-60000")
+    field(HOPR, "60000")
+    field(PINI, "YES")
+}
+
+record(bi, "$(P)$(Q)ArrayDataAUTOSCALE"){
+    field(DESC, "Auto scale Array Data on Y Axis")
+    field(VAL, "1")
+    field(PINI, "YES")
+    field(ZNAM, "OFF")
+    field(ONAM, "ON")
+}
+
+record(bi, "$(P)$(Q)ConnectionStatus"){
+    field(DTYP, "asynInt32")
+    field(INP,  "@asyn($(PORT), 0, 1)OceanDirectConnectionStatus")
+    field(PINI, "YES")
+    field(ZNAM, "NOT CONNECTED")
+    field(ONAM, "CONNECTED")
+    field(SCAN, "2 second")
+}

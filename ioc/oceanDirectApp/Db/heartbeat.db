@@ -1,0 +1,7 @@
+# Heartbeat database
+record(calc, "$(device):HEARTBEAT") {
+  field(SCAN, "1 second")
+  field(VAL, "1")
+  field(CALC, "!a")
+  field(INPA, "$(device):HEARTBEAT")
+}
